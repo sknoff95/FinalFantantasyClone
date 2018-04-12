@@ -1,2 +1,0 @@
-# FinalFantatasyClone
-Aggressive Monetization
