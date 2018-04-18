@@ -48,6 +48,7 @@ public class SimpleFramework extends JFrame implements Runnable
 	protected Font appFont = new Font("Courier New", Font.PLAIN, 14);
 	protected String appTitle = "TBT-Title";
 	protected float appBoarderScale = 0.8f;
+	//TODO change to 16 9 aspect ratio
 	protected int appWidth = 640;
 	protected int appHeight = 480;
 	protected float appWorldWidth = 2.0f;
