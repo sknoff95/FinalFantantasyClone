@@ -1,0 +1,8 @@
+Initialize - Called only on first load of the Sound Engine File, should be in the main file
+ShutDownClips - Called only when all clips should be shut down, should be called in the terminate method
+FireClip - Plays a single event once, call when a sound effect should be played
+ClipEnd - Ends the playback of a single event, call only if a sound effect needs to be ended early
+FireLoop - Loops a file until told to stop, use for playing background music
+LoopEnd - Ends the playback of a loop file, use to end background music
+LoadClip - Loads a clip based upon which passed int it will have (Will update with a cypher for what is what)
+PlayClip - Depreceated
