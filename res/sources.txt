@@ -1,0 +1,12 @@
+16 by 16 player from https://opengameart.orgcontentbase-character-spritesheet-16x16
+32 by 32 Evil Castle from https://opengameart.org/content/lpc-castle-mega-pack
+16 by 16 town from https://opengameart.org/content/16x16-town-remix
+32 by 32 wolf modified from https://opengameart.org/content/wolf-pony-cutiemark 
+32 by 32 slime modified from https://opengameart.org/content/green-slime
+(sizes in url) goblin plus other useful stuff from https://opengameart.org/content/16x16-16x24-32x32-rpg-enemies-updated
+48 by 64 Boss from https://opengameart.org/content/lich-death-knight-and-fallen-warrior
+70 by 112 knight from https://opengameart.org/content/knight
+backdrop grassland from https://opengameart.org/content/grassy-plains-background
+backdrop forest from https://opengameart.org/content/forest-background-art
+backdrop cave from https://opengameart.org/content/fossil-cave
+backdrop space from https://opengameart.org/content/space-background
