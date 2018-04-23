@@ -27,6 +27,8 @@ public class Character extends Sprite{
 		rand = new Random();
 	}
 
+	//public void act(Character[] targetArr, int action)
+	
 	public boolean damage(int dmg)
 	{
 		if(hp - dmg <= 0)
