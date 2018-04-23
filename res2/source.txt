@@ -1,0 +1,26 @@
+all spritesheets 32*32 unless spesified by me.
+unless otherwise spesified each as 4 * 4 frames
+
+bald player (resized) from https://opengameart.orgcontentbase-character-spritesheet-16x16
+goblin (resized) from https://opengameart.org/content/16x16-16x24-32x32-rpg-enemies-updated
+knight from https://opengameart.org/content/16x16-16x24-32x32-rpg-enemies-updated
+slime (resized) (only 3 frames) from https://opengameart.org/content/16x16-16x24-32x32-rpg-enemies-updated
+evil knight (48*64) (3 by 4 frames) Boss from https://opengameart.org/content/lich-death-knight-and-fallen-warrior 
+wolf (64*32) (5*2 frames last row 5 frame long bite) https://opengameart.org/content/lpc-wolf-animation
+
+special effects
+
+stun (32*8) (1*4 frames) https://opengameart.org/content/sparkles
+healing (sparkles recolored)
+fevor (sparkles recolored)
+knights sword (16*16) (1 frame) https://opengameart.org/content/sword-1
+rouge knife (8*8)(1 frame) https://opengameart.org/content/medieval-sword
+fireball (16*32)(3*2 frames) https://opengameart.org/content/high-res-fire-ball
+rock (16*16)(1 frame) https://opengameart.org/content/rock-pile (preferably curved throw)
+
+background (fill whole screen)
+
+evil castle https://holly-mellor.deviantart.com/art/Queen-Beryl-Throne-Room-387044567
+cave from https://opengameart.org/content/fossil-cave
+field from https://opengameart.org/content/grassy-plains-background
+forest from https://opengameart.org/content/forest-background-art
