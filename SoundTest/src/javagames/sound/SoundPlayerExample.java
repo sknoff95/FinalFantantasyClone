@@ -36,6 +36,39 @@ public class SoundPlayerExample extends SimpleFramework {
 		if (keyboard.keyDownOnce(KeyEvent.VK_F2)) {
 			SE.LoadClip(1);
 		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F3)) {
+			SE.LoadClip(2);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F4)) {
+			SE.LoadClip(3);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F5)) {
+			SE.LoadClip(4);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F6)) {
+			SE.LoadClip(5);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F7)) {
+			SE.LoadClip(6);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F8)) {
+			SE.LoadClip(7);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F9)) {
+			SE.LoadClip(8);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F10)) {
+			SE.LoadClip(9);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F11)) {
+			SE.LoadClip(10);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_F12)) {
+			SE.LoadClip(11);
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_0)) {
+			SE.LoadClip(12);
+		}
 		if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
 			SE.FireClip();
 		}
