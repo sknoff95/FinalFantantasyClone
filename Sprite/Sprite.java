@@ -67,32 +67,48 @@ public class Sprite {
 		g2d.drawImage(frame, transform, null);
 	}
 	
-	/**
-	   transform
-	   Inputs		: Vector2f position, the amount to be translated by, float angle, the angle to be rotated, Matrix3x3f viewport, the current viewport 
-	   matrix, float sx, the x scale value, float sy, the y scale value
-	   Outputs		: void 
-	   Calls on createTransform to create the AffineTransformation to be used
-	 */
-	public void transform(Vector2f position, float angle, Matrix3x3f viewport, float sx, float sy)
+	public void rotate(float angle, Matrix3x3f viewport)
 	{
-		transform = createTransform(position, angle, viewport, sx, sy);
+		transform = createRotate(angle, viewport);
 	}
 	
-	/**
-	   createTransform
-	   Inputs		: Vector2f position, the amount to be translated by, float angle, the angle to be rotated, Matrix3x3f viewport, the current viewport 
-	   matrix, float sx, the x scale value, float sy, the y scale value
-	   Outputs		: An AffineTransform, the AffineTransformation created with the given information 
-	   Creates an AffineTransform to be used in drawing the sprite, can take scale, rotation, and translation
-	 */
-	private AffineTransform createTransform(Vector2f position, float angle, Matrix3x3f viewport, float sx, float sy)
+	public void scale(float sx, float sy, Matrix3x3f viewport)
+	{
+		transform = createScale(sx, sy, viewport);
+	}
+	
+	public void transform(Vector2f position,/* float angle,*/ Matrix3x3f viewport/*, float sx, float sy*/)
+	{
+		transform = createTransform(position,/* angle, */viewport/*, sx, sy*/);
+	}
+	
+	public AffineTransform createRotate(float angle, Matrix3x3f viewport)
+	{
+		Vector2f screen = viewport.mul(new Vector2f(0,0));
+		AffineTransform transform = AffineTransform.getTranslateInstance(screen.x, screen.y);
+		
+		transform.rotate(angle);
+		
+		return transform;
+	}
+	
+	public AffineTransform createScale(float sx, float sy, Matrix3x3f viewport)
+	{
+		Vector2f screen = viewport.mul(new Vector2f(0, 0));
+		AffineTransform transform = AffineTransform.getTranslateInstance(screen.x, screen.y);
+		
+		transform.scale(sx, sy);
+		
+		return transform;
+	}
+	
+	private AffineTransform createTransform(Vector2f position,/* float angle,*/ Matrix3x3f viewport/*, float sx, float sy*/)
 	{
 		Vector2f screen = viewport.mul(position);
 		AffineTransform transform = AffineTransform.getTranslateInstance(screen.x, screen.y);
 		
-		transform.scale(sx, sy);
-		transform.rotate(angle);
+		//transform.scale(sx, sy);
+		//transform.rotate(angle);
 		transform.translate(-frame.getWidth() / 2, -frame.getHeight() / 2);
 		
 		return transform;
