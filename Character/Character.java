@@ -41,6 +41,8 @@ public class Character extends Sprite{
 
 	public boolean damage(int dmg)
 	{
+		flashOn();
+		
 		if(hp - dmg <= 0)
 		{
 			hp = 0;
@@ -70,6 +72,27 @@ public class Character extends Sprite{
 	public boolean isAlive()
 	{
 		return alive;
+	}
+	
+	public void flashOn()
+	{
+		setAlpha(0);
+	}
+	
+	//Now this one might change depending on whether or not we want their alpha to actually be 100 or if this changes for different sprites
+	public void flashOff()
+	{
+		setAlpha(100);
+	}
+	
+	public void stepUp(Matrix3x3f viewport)
+	{
+		transform(new Vector2f(-2.0f, 0.0f), viewport);
+	}
+	
+	public void stepBack(Matrix3x3f viewport)
+	{
+		transform(new Vector2f(2.0f, 0.0f), viewport);
 	}
 }
 

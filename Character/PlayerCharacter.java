@@ -1,5 +1,7 @@
 package Character;
 
+import SimpleFramework.*;
+
 public class PlayerCharacter extends Character{
 
 	private int xp, xpmax;
@@ -41,6 +43,18 @@ public class PlayerCharacter extends Character{
 			xp += exp;
 		
 		return xp;
+	}
+	
+	@Override
+	public void stepUp(Matrix3x3f viewport)
+	{
+		transform(new Vector2f(2.0f, 0.0f), viewport);
+	}
+	
+	@Override
+	public void stepBack(Matrix3x3f viewport)
+	{
+		transform(new Vector2f(-2.0f, 0.0f), viewport);
 	}
 }
 
