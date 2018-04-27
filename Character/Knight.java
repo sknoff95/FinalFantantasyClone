@@ -2,6 +2,8 @@ package Character;
 
 public class Knight extends PlayerCharacter{
 	
+	private boolean defenseUp;
+	
 	public Knight(String fileName, int h, int w, int hp, String name) {
 		super(/*Knight's fileName*/fileName, h, w, 45, "Knight name", 1, 10, 2, 1);
 	}
@@ -51,6 +53,25 @@ public class Knight extends PlayerCharacter{
 			}
 			break;
 		}
+	}
+	
+	@Override
+	public boolean damage(int dmg)
+	{
+		if(defenseUp)
+			dmg /= 2;
+		
+		if(hp - dmg <= 0)
+		{
+			hp = 0;
+			alive = false;
+			//This is for the dead frame, whatever those pixel values will be
+			this.grabFrame(35, 25);
+		}
+		else
+			hp -= dmg;
+		
+		return alive;
 	}
 
 	private void attack(Character[] enemies, int target)
