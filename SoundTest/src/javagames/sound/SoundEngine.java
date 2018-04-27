@@ -27,6 +27,7 @@ public class SoundEngine {
 	private byte[] lightningBytes;
 	private byte[] slimeBytes;
 	private byte[] wolfBytes;
+	private byte[] coinBytes;
 	private String loaded;
 
 	public void initialize() {
@@ -53,6 +54,8 @@ public class SoundEngine {
 		townBytes = readBytes(in);
 		in = ResourceLoader.load(SoundPlayerExample.class, "./resources/wolf.wav", "asdf");
 		wolfBytes = readBytes(in);
+		in = ResourceLoader.load(SoundPlayerExample.class, "./resources/coin.wav", "asdf");
+		coinBytes = readBytes(in);
 		loaded = "loaded";
 	}
 
@@ -158,6 +161,9 @@ public class SoundEngine {
 		}
 		if (clip == 11) {
 			loadWaveFile(wolfBytes);
+		}
+		if (clip == 12) {
+			loadWaveFile(coinBytes);
 		}
 	}
 
