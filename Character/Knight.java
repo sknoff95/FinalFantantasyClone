@@ -1,8 +1,6 @@
 package Character;
 
 public class Knight extends PlayerCharacter{
-
-	public boolean defenseUp;
 	
 	public Knight(String fileName, int h, int w, int hp, String name) {
 		super(/*Knight's fileName*/fileName, h, w, 45, "Knight name", 1, 10, 2, 1);
