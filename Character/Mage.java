@@ -50,13 +50,6 @@ public class Mage extends PlayerCharacter{
 		}
 	}
 	
-	public void die()
-	{
-		//I actually have no idea what these numbers will be 
-		this.grabFrame(30, 45);
-	}
-	
-	
 	private void stun(Character[] enemies, int target)
 	{
 		enemies[target].stunned = true;

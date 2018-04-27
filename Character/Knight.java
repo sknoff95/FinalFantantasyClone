@@ -54,12 +54,6 @@ public class Knight extends PlayerCharacter{
 			break;
 		}
 	}
-	
-	public void die()
-	{
-		//I actually have no idea what these numbers will be 
-		this.grabFrame(30, 45);
-	}
 
 	private void attack(Character[] enemies, int target)
 	{

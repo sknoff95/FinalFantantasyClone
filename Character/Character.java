@@ -1,6 +1,7 @@
 package Character;
 
 import Sprite.*;
+import SimpleFramework.*;
 import java.util.Random;
 
 public class Character extends Sprite{
@@ -44,6 +45,8 @@ public class Character extends Sprite{
 		{
 			hp = 0;
 			alive = false;
+			//This is for the dead frame, whatever those pixel values will be
+			this.grabFrame(35, 25);
 		}
 		else
 			hp -= dmg;

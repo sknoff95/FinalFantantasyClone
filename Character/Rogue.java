@@ -2,8 +2,6 @@ package Character;
 
 public class Rogue extends PlayerCharacter{
 	
-	public boolean stealth;
-	
 	public Rogue(String fileName, int h, int w, int hp, String name) {
 		super(/*Thief's fileName*/fileName, h, w, 30, "Thief name", 1, 35, 1, 1);
 	}
@@ -17,8 +15,6 @@ public class Rogue extends PlayerCharacter{
 		intel++;
 		//Tentative hp upgrade equation
 		hp = hp + con*2;
-		
-		stealth = false;
 		
 		return lv;		
 	}
@@ -52,12 +48,6 @@ public class Rogue extends PlayerCharacter{
 		}
 	}
 	
-	public void die()
-	{
-		//I actually have no idea what these numbers will be 
-		this.grabFrame(30, 45);
-	}
-	
 	private void attack(Character[] enemies, int target)
 	{
 		int dmg = (rand.nextInt(5) + 3) + str;
@@ -65,6 +55,12 @@ public class Rogue extends PlayerCharacter{
 		
 		if(crit < 3)
 			dmg += (dmg*.2);
+		
+		if(stealth)
+		{
+			dmg += 3;
+			stealth = false;
+		}
 		
 		enemies[target].damage(dmg);
 	}
