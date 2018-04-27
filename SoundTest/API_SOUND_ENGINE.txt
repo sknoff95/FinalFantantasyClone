@@ -4,5 +4,20 @@ FireClip - Plays a single event once, call when a sound effect should be played
 ClipEnd - Ends the playback of a single event, call only if a sound effect needs to be ended early
 FireLoop - Loops a file until told to stop, use for playing background music
 LoopEnd - Ends the playback of a loop file, use to end background music
-LoadClip - Loads a clip based upon which passed int it will have (Will update with a cypher for what is what)
+LoadClip - Loads a clip based upon which passed int it will have
 PlayClip - Depreceated
+
+
+Cypher for LoadClip
+0 = Travel Music
+1 = Battle Music
+2 = Town Music
+3 = Bottle Effect
+4 = DPS Swing
+5 = Tank Swing
+6 = Fireball Sound
+7 = Goblin Sound
+8 = Heal Sound
+9 = Lightning Sound
+10 = SLine Sound
+11 = Wolf Sound
