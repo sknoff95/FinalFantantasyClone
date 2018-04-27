@@ -21,13 +21,18 @@ import javagames.Sprites.*;
 
 public class FinalProject extends SimpleFramework {
 
-	private Vector2f mousePosition;
 	private IslandMap island = new IslandMap("IslandMap.png");
 	private Cottage cottage = new Cottage("Cottage.png");
+	private Cave cave = new Cave("CaveInterior.png");
+	private Castle castle = new Castle("CastleInterior.png");
+	private Battle battle = new Battle();
 	private OverworldCharacter overChar = new OverworldCharacter("OverworldCharacter.png");
 	private boolean getReverse = false;
 	private boolean renderHitboxes = false;
-	private float gameState = 0;
+	private int gameState = 0;
+	private float xSpeed = 0;
+	private float ySpeed = 0;
+	private final int NUMBER_OF_GAMESTATES = 5;
 	
 	//Sets all of the initial variables which define the canvas space
 	public FinalProject() {
@@ -60,126 +65,117 @@ public class FinalProject extends SimpleFramework {
 	@Override
 	protected void processInput(float delta) {
 		super.processInput(delta);
+		if(keyboard.keyDownOnce(KeyEvent.VK_P)){
+			gameState += 1;
+			if(gameState == NUMBER_OF_GAMESTATES){
+				gameState = 0;
+			}
+		}
 		
 		//keyboard input for overworld character movement
 		if(gameState == 0){
-				overChar.setDeltaX(0);
-				overChar.setDeltaY(0);
-				overChar.setAction(0);
-				overChar.addTime(delta);
+			xSpeed = 0;
+			ySpeed = 0;
+			overChar.addTime(delta);
+			
+			if(keyboard.keyDown(KeyEvent.VK_D)){
+				xSpeed += 2;
+			}
+			if(keyboard.keyDown(KeyEvent.VK_A)){
+				xSpeed += -2;
+			}
+			if(keyboard.keyDown(KeyEvent.VK_W)){
+				ySpeed += 2;
+			}
+			if(keyboard.keyDown(KeyEvent.VK_S)){
+				ySpeed += -2;
+			}
 				
-				if(keyboard.keyDown(KeyEvent.VK_D)){					
-					//all buttons pressed D,W,A,S, do nothing
-					if(keyboard.keyDown(KeyEvent.VK_W) && keyboard.keyDown(KeyEvent.VK_A) && keyboard.keyDown(KeyEvent.VK_S)){
-						overChar.setDeltaX(0);
-						overChar.setAction(0);
-					}
-					//D,W,A
-					else if(keyboard.keyDown(KeyEvent.VK_W) && keyboard.keyDown(KeyEvent.VK_A)){
-						overChar.setDeltaY(2);
-						overChar.setDeltaX(0);
-					}
-					//D,W,S
-					else if(keyboard.keyDown(KeyEvent.VK_W) && keyboard.keyDown(KeyEvent.VK_S)){
-						overChar.setDeltaX(2);
-						getReverse = false;
-					}
-					//D,A,S
-					else if(keyboard.keyDown(KeyEvent.VK_A) && keyboard.keyDown(KeyEvent.VK_S)){
-						overChar.setDeltaY(-2);
-					}
-					//D,W
-					else if(keyboard.keyDown(KeyEvent.VK_W)){
-						overChar.setDeltaY(1.4f);
-						overChar.setDeltaX(1.4f);
-						getReverse = false;
-					}
-					//D,A
-					else if(keyboard.keyDown(KeyEvent.VK_A)){
-						overChar.setAction(0);
-						overChar.setDeltaX(0);
-					}
-					//D,S
-					else if(keyboard.keyDown(KeyEvent.VK_S)){
-						overChar.setDeltaY(-1.4f);
-						overChar.setDeltaX(1.4f);
-						getReverse = false;
-					}
-					//D
-					else{
-						overChar.setAction(1);
-						overChar.setDeltaX(2);
-						getReverse = false;
-					}
-				}
-				//All key combos that do not contain D
-				else if(keyboard.keyDown(KeyEvent.VK_A)){
-					getReverse = true;
-					overChar.setAction(1);
-					//A,W,S
-					if(keyboard.keyDown(KeyEvent.VK_W) && keyboard.keyDown(KeyEvent.VK_S)){
-						overChar.setDeltaX(-2);
-					}
-					//A,W
-					else if(keyboard.keyDown(KeyEvent.VK_W)){
-						overChar.setDeltaY(1.4f);
-						overChar.setDeltaX(-1.4f);
-					}
-					//A,S
-					else if(keyboard.keyDown(KeyEvent.VK_S)){
-						overChar.setDeltaY(-1.4f);
-						overChar.setDeltaX(-1.4f);
-					}
-					//A
-					else{
-						overChar.setDeltaX(-2);
-					}
-				}
-				//Key combos that do not contain D,A
-				else if(keyboard.keyDown(KeyEvent.VK_W)){
-					
-					//W,S
-					if(keyboard.keyDown(KeyEvent.VK_S)){
-						overChar.setAction(0);
-						overChar.setDeltaY(0);
-					}
-					//W
-					else{
-
-						overChar.setAction(1);
-						overChar.setDeltaY(2);
-					}
-				}
-				//S
-				else if(keyboard.keyDown(KeyEvent.VK_S)){
-					overChar.setAction(1);
-					overChar.setDeltaY(-2);
-				}
+				
 		}
 		else if(gameState == 1){
+			//Scrolling up and down the menu options
+			if(keyboard.keyDownOnce(KeyEvent.VK_W)){
+				cottage.decrementSelectedOption();
+			}
+			if(keyboard.keyDownOnce(KeyEvent.VK_S)){
+				cottage.incrementSelectedOption();
+			}
 			
+			//Selecting an option
+			if(keyboard.keyDownOnce(KeyEvent.VK_ENTER)){
+				System.out.println(cottage.getSelectedOption());
+				if(cottage.getSelectedOption() == 4){
+					gameState = 0;
+				}
+			}
+		}
+		else if(gameState == 2){
+			
+		}
+		else if(gameState == 3){
+			
+		}
+		else if(gameState == 4){
+	
 		}
 	}
 
 	@Override
 	protected void updateObjects(float delta) {
 		super.updateObjects(delta);
+		
+		//Overworld character movement speed updates
+		if(xSpeed != 0 && ySpeed != 0){
+			xSpeed = xSpeed*0.707f;
+			ySpeed = ySpeed*0.707f;
+		}
+		
+		if(xSpeed != 0 || ySpeed != 0){
+			overChar.setAction(1);
+		}
+		else{
+			overChar.setAction(0);
+		}
+		
+		if(xSpeed < 0){
+			getReverse = true;
+		}
+		else if(xSpeed > 0){
+			getReverse = false;
+		}
+		
+		overChar.setDeltaX(xSpeed);
+		overChar.setDeltaY(ySpeed);
 		overChar.updatePosition(delta);
+		
 	}
 
 	@Override
 	protected void render(Graphics g) {
 		super.render(g);
 		Matrix3x3f worldViewport = getViewportTransform();
+		int w = canvas.getWidth();
+		int h = canvas.getHeight();
 		
 		//renders background, then everything else
 		if(gameState == 0){
-			island.renderBackground(g, canvas.getWidth(), canvas.getHeight());
-			overChar.render(g, worldViewport, canvas.getWidth(), canvas.getHeight(), getReverse);
+			island.renderBackground(g, w, h);
+			overChar.render(g, worldViewport, w, h, getReverse);
 		}
 		else if(gameState == 1){
-			cottage.renderBackground(g, canvas.getWidth(), canvas.getHeight());
+			cottage.renderBackground(g, w, h);
 		}
+		else if(gameState == 2){
+			cave.renderBackground(g, w, h);
+		}
+		else if(gameState == 3){
+			castle.renderBackground(g, w, h);
+		}
+		else if(gameState == 4){
+			battle.renderBackground(g, w, h);
+		}
+		
 		//only renders hitbox if b was pressed
 		if(renderHitboxes == true){
 			island.renderHitboxes(g, worldViewport);
