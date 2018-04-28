@@ -4,7 +4,7 @@ public class Knight extends PlayerCharacter{
 	
 	private boolean defenseUp;
 	
-	public Knight(int h, int w) {
+	public Knight() {
 		super("res2/knight.png", 21, 30, 45, "Steven the Knight", 1, 10, 2, 1);
 		defenseUp = false;
 	}
