@@ -77,9 +77,9 @@ public class Sprite {
 		transform = createScale(sx, sy, viewport);
 	}
 	
-	public void transform(Vector2f position, Matrix3x3f viewport)
+	public void transform(Vector2f position,/* float angle,*/ Matrix3x3f viewport/*, float sx, float sy*/)
 	{
-		transform = createTransform(position,viewport);
+		transform = createTransform(position,/* angle, */viewport/*, sx, sy*/);
 	}
 	
 	public AffineTransform createRotate(float angle, Matrix3x3f viewport)
@@ -102,11 +102,13 @@ public class Sprite {
 		return transform;
 	}
 	
-	private AffineTransform createTransform(Vector2f position, Matrix3x3f viewport)
+	private AffineTransform createTransform(Vector2f position,/* float angle,*/ Matrix3x3f viewport/*, float sx, float sy*/)
 	{
 		Vector2f screen = viewport.mul(position);
 		AffineTransform transform = AffineTransform.getTranslateInstance(screen.x, screen.y);
 		
+		//transform.scale(sx, sy);
+		//transform.rotate(angle);
 		transform.translate(-frame.getWidth() / 2, -frame.getHeight() / 2);
 		
 		return transform;
@@ -121,6 +123,16 @@ public class Sprite {
 	public void grabFrame(int x, int y)
 	{
 		frame = sprite.getSubimage(x, y, frameWidth, frameHeight);
+	}
+	
+	public void updateHeight(int h)
+	{
+		frameHeight = h;
+	}
+	
+	public void updateWidth(int w)
+	{
+		frameWidth = w;
 	}
 	
 	/**
