@@ -6,6 +6,7 @@ public class Knight extends PlayerCharacter{
 	
 	public Knight(int h, int w) {
 		super("res2/knight.png", 21, 30, 45, "Steven the Knight", 1, 10, 2, 1);
+		defenseUp = false;
 	}
 
 	@Override
@@ -17,9 +18,7 @@ public class Knight extends PlayerCharacter{
 		intel++;
 		//Tentative hp upgrade equation
 		hp = hp + con*2;
-		
-		defenseUp = false;
-		
+			
 		return lv;		
 	}
 	
