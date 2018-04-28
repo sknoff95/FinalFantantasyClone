@@ -2,7 +2,7 @@ package Character;
 
 public class Rogue extends PlayerCharacter{
 	
-	public Rogue(int h, int w) {
+	public Rogue() {
 		super("res2/rouge.png", 30, 28, 30, "Gary the Thief", 1, 35, 1, 1);
 	}
 
