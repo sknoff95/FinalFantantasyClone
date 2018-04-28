@@ -26,7 +26,11 @@ public class Goblin extends Character{
 	private void attack(Character[] party)
 	{
 		int dmg = rand.nextInt(2) + 1;
-		int target = rand.nextInt(3) + 0;
+		int target;
+		do
+		{
+		target = rand.nextInt(3) + 0;
+		}while(party[target].stealth);
 		
 		party[target].damage(dmg);
 	}

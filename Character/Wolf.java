@@ -25,7 +25,10 @@ public class Wolf extends Character{
 	{
 		int crit = rand.nextInt(10) + 1;
 		int dmg = rand.nextInt(5) + 2;
-		int target = rand.nextInt(3) + 0;
+		int target;
+		do{
+		target = rand.nextInt(3) + 0;
+		}while(party[target].stealth);
 		
 		if(crit == 1)
 			dmg += (dmg*.1);

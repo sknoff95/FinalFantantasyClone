@@ -25,7 +25,10 @@ public class Slime extends Character{
 	{
 		int stun = rand.nextInt(10) + 1;
 		int dmg = rand.nextInt(3) + 1;
-		int target = rand.nextInt(3) + 0;
+		int target;
+		do{
+		target = rand.nextInt(3) + 0;
+		}while(party[target].stealth);
 		
 		if(stun == 1)
 			party[target].stunned = true;
