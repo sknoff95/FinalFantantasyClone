@@ -2,7 +2,7 @@ package Character;
 
 public class Mage extends PlayerCharacter{
 
-	public Mage(int h, int w) {
+	public Mage() {
 		super("res2/mage.png", 24, 16, 20, "Tim the Enchanter", 1, 15, 1, 2);
 	}
 	
