@@ -2,8 +2,8 @@ package Character;
 
 public class Mage extends PlayerCharacter{
 
-	public Mage(String fileName, int h, int w, int hp, int xp) {
-		super(/*Mage's fileName*/fileName, h, w, 20, "Mage name", 1, 15, 1, 2);
+	public Mage(int h, int w) {
+		super("res2/mage.png", 24, 16, 20, "Tim the Enchanter", 1, 15, 1, 2);
 	}
 	
 	@Override

@@ -47,8 +47,6 @@ public class Character extends Sprite{
 		{
 			hp = 0;
 			alive = false;
-			//This is for the dead frame, whatever those pixel values will be
-			this.grabFrame(35, 25);
 		}
 		else
 			hp -= dmg;
@@ -82,7 +80,7 @@ public class Character extends Sprite{
 	//Now this one might change depending on whether or not we want their alpha to actually be 100 or if this changes for different sprites
 	public void flashOff()
 	{
-		setAlpha(100);
+		setAlpha(1.0f);
 	}
 	
 	public void stepUp(Matrix3x3f viewport)

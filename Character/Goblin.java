@@ -1,8 +1,9 @@
 package Character;
 public class Goblin extends Character{
-	public Goblin(String fileName, int h, int w, int hp, int lv, String name, int str, int sp, int con, int intel) {
+	
+	public Goblin(int h, int w, int hp, int lv, int sp) {
 		//For level, should probably input a random between characterLevel-2 and characterLevel+2 in the logic. Same goes for speed
-		super(fileName, h, w, hp, lv, "Goblin", 1+lv, sp, 1+lv, 1+(2*lv));
+		super("res2/goblin.png", 32, 24, hp, lv, "Goblin", 1+lv, sp, 1+lv, 1+(2*lv));
 	}
 	
 	@Override

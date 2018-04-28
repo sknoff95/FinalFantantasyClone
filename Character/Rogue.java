@@ -2,8 +2,8 @@ package Character;
 
 public class Rogue extends PlayerCharacter{
 	
-	public Rogue(String fileName, int h, int w, int hp, String name) {
-		super(/*Thief's fileName*/fileName, h, w, 30, "Thief name", 1, 35, 1, 1);
+	public Rogue(int h, int w) {
+		super("res2/rouge.png", 30, 28, 30, "Gary the Thief", 1, 35, 1, 1);
 	}
 
 	@Override
@@ -60,6 +60,7 @@ public class Rogue extends PlayerCharacter{
 		{
 			dmg += 3;
 			stealth = false;
+			setAlpha(1.0f);
 		}
 		
 		enemies[target].damage(dmg);
@@ -68,6 +69,7 @@ public class Rogue extends PlayerCharacter{
 	private void stealth()
 	{
 		stealth = true;
+		setAlpha(0.5f);
 	}
 }
 

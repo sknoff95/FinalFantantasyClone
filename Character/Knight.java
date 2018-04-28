@@ -4,8 +4,8 @@ public class Knight extends PlayerCharacter{
 	
 	private boolean defenseUp;
 	
-	public Knight(String fileName, int h, int w, int hp, String name) {
-		super(/*Knight's fileName*/fileName, h, w, 45, "Knight name", 1, 10, 2, 1);
+	public Knight(int h, int w) {
+		super("res2/knight.png", 21, 30, 45, "Steven the Knight", 1, 10, 2, 1);
 	}
 
 	@Override
@@ -65,8 +65,6 @@ public class Knight extends PlayerCharacter{
 		{
 			hp = 0;
 			alive = false;
-			//This is for the dead frame, whatever those pixel values will be
-			this.grabFrame(35, 25);
 		}
 		else
 			hp -= dmg;
