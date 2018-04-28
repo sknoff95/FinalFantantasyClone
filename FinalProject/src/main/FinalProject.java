@@ -28,7 +28,7 @@ public class FinalProject extends SimpleFramework {
 	private Battle battle = new Battle();
 	private OverworldCharacter overChar = new OverworldCharacter("OverworldCharacter.png");
 	private boolean getReverse = false;
-	private boolean renderHitboxes = false;
+	private boolean renderHitboxes = true;
 	private int gameState = 0;
 	private float xSpeed = 0;
 	private float ySpeed = 0;
@@ -57,9 +57,8 @@ public class FinalProject extends SimpleFramework {
 	@Override
 	protected void initialize() {
 		super.initialize();
-		island.setColor(Color.RED);
 		
-		//Background Hitboxes
+		//overChar.addRectHitbox(new Vector2f((float)(overChar.getPosition().x+.15), (float)(overChar.getPosition().y-.04)), new Vector2f((float)(overChar.getPosition().x + .52), (float)(overChar.getPosition().y - .77)));
 	}
 
 	@Override
@@ -70,6 +69,10 @@ public class FinalProject extends SimpleFramework {
 			if(gameState == NUMBER_OF_GAMESTATES){
 				gameState = 0;
 			}
+		}
+		
+		if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
+			renderHitboxes = !renderHitboxes;
 		}
 		
 		//keyboard input for overworld character movement
@@ -178,8 +181,23 @@ public class FinalProject extends SimpleFramework {
 		
 		//only renders hitbox if b was pressed
 		if(renderHitboxes == true){
-			island.renderHitboxes(g, worldViewport);
-			overChar.renderHitboxes(g, worldViewport);
+			
+			if(gameState == 0){
+				island.renderHitboxes(g, worldViewport);
+				overChar.renderHitboxes(g, worldViewport);
+			}
+			else if(gameState == 1){
+				cottage.renderBackground(g, w, h);
+			}
+			else if(gameState == 2){
+				cave.renderBackground(g, w, h);
+			}
+			else if(gameState == 3){
+				castle.renderBackground(g, w, h);
+			}
+			else if(gameState == 4){
+				battle.renderBackground(g, w, h);
+			}
 		}
 	}
 	

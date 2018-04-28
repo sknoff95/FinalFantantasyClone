@@ -34,6 +34,9 @@ public class OverworldCharacter extends Sprite{
 		position.y = (float)0;
 		deltaX = 0;
 		deltaY = 0;
+		
+		//Character Hitbox
+		this.addRectHitbox(new Vector2f((float)(position.x+.15), (float)(position.y-.04)), new Vector2f((float)(position.x + .52), (float)(position.y - .77)));
 	}
 	
 	public void addRectHitbox(Vector2f topLeft, Vector2f bottomRight){

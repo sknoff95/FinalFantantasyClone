@@ -152,7 +152,7 @@ public class Sprite implements Drawable{
 	public void render(Graphics g){
 		Vector2f P = new Vector2f();
 		Vector2f S = new Vector2f();
-		g.setColor(color);
+		g.setColor(Color.GREEN);
 			
 		if(rectHitboxes.size() > 1){
 			for(int x = 0; x < rectHitboxes.size(); x += 2){
@@ -177,7 +177,7 @@ public class Sprite implements Drawable{
 	public void render(Graphics g, Matrix3x3f viewport){
 		Vector2f P = new Vector2f();
 		Vector2f S = new Vector2f();
-		g.setColor(color);
+		g.setColor(Color.GREEN);
 		
 		if(rectHitboxes.size() > 1){
 			for(int x = 0; x < rectHitboxes.size(); x += 2){
@@ -194,6 +194,23 @@ public class Sprite implements Drawable{
 				g.drawOval((int)P.x, (int)P.y, (int)(S.x-P.x), (int)(S.y-P.y));
 			}
 		}
+	}
+	
+	public Boolean checkHitboxes(Vector2f topLeft, Vector2f bottomRight){
+		
+		//Rectangular Hit Box Detection
+		for(int a = 0; a < rectHitboxes.size(); a += 2){
+			Vector2f boxTopLeft = rectHitboxes.get(a);
+			Vector2f boxBotRight = rectHitboxes.get(a+1);
+			
+			if(topLeft.x > boxBotRight.x || bottomRight.x < boxTopLeft.x){
+				return false;
+			}
+			if(topLeft.y < boxBotRight.y || bottomRight.y > boxTopLeft.y){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	//Get functions that get values from vectors array list
