@@ -29,10 +29,15 @@ public class FinalProject extends SimpleFramework {
 	private OverworldCharacter overChar = new OverworldCharacter("OverworldCharacter.png");
 	private boolean getReverse = false;
 	private boolean renderHitboxes = true;
-	private int gameState = 0;
+	private int gameState = 3;
 	private float xSpeed = 0;
 	private float ySpeed = 0;
 	private final int NUMBER_OF_GAMESTATES = 5;
+	//Gamestate 0 = overworld
+	//Gamestate 1 = cave
+	//Gamestate 2 = cottage
+	//Gamestate 3 = castle
+	//Gamestate 4 = battle
 	
 	//Sets all of the initial variables which define the canvas space
 	public FinalProject() {
@@ -57,8 +62,6 @@ public class FinalProject extends SimpleFramework {
 	@Override
 	protected void initialize() {
 		super.initialize();
-		
-		//overChar.addRectHitbox(new Vector2f((float)(overChar.getPosition().x+.15), (float)(overChar.getPosition().y-.04)), new Vector2f((float)(overChar.getPosition().x + .52), (float)(overChar.getPosition().y - .77)));
 	}
 
 	@Override
@@ -71,12 +74,16 @@ public class FinalProject extends SimpleFramework {
 			}
 		}
 		
+		if(keyboard.keyDownOnce(KeyEvent.VK_B)){
+			gameState = 4;
+		}
+		
 		if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
 			renderHitboxes = !renderHitboxes;
 		}
 		
 		//keyboard input for overworld character movement
-		if(gameState == 0){
+		if(gameState != 2 && gameState != 4){
 			xSpeed = 0;
 			ySpeed = 0;
 			overChar.addTime(delta);
@@ -93,10 +100,9 @@ public class FinalProject extends SimpleFramework {
 			if(keyboard.keyDown(KeyEvent.VK_S)){
 				ySpeed += -2;
 			}
-				
-				
 		}
-		else if(gameState == 1){
+		//Keyboard input for cottage menu selection
+		else if(gameState == 2){
 			//Scrolling up and down the menu options
 			if(keyboard.keyDownOnce(KeyEvent.VK_W)){
 				cottage.decrementSelectedOption();
@@ -110,48 +116,121 @@ public class FinalProject extends SimpleFramework {
 				System.out.println(cottage.getSelectedOption());
 				if(cottage.getSelectedOption() == 4){
 					gameState = 0;
+					overChar.setPosition(0, 0);
 				}
 			}
 		}
-		else if(gameState == 2){
-			
-		}
-		else if(gameState == 3){
-			
-		}
+		//Keyboard input for battle menu selection
 		else if(gameState == 4){
-	
+			if(keyboard.keyDownOnce(KeyEvent.VK_E)){
+				gameState = battle.exitBattle();
+			}
 		}
 	}
 
 	@Override
 	protected void updateObjects(float delta) {
 		super.updateObjects(delta);
-		
+		boolean intersect;
 		//Overworld character movement speed updates
-		if(xSpeed != 0 && ySpeed != 0){
-			xSpeed = xSpeed*0.707f;
-			ySpeed = ySpeed*0.707f;
+		if(gameState != 2 && gameState != 4){
+			if(xSpeed != 0 && ySpeed != 0){
+				xSpeed = xSpeed*0.707f;
+				ySpeed = ySpeed*0.707f;
+			}
+			
+			if(xSpeed != 0 || ySpeed != 0){
+				overChar.setAction(1);
+			}
+			else{
+				overChar.setAction(0);
+			}
+			
+			if(xSpeed < 0){
+				getReverse = true;
+			}
+			else if(xSpeed > 0){
+				getReverse = false;
+			}
+			
+			overChar.setDeltaX(xSpeed);
+			overChar.setDeltaY(ySpeed);
+			overChar.updatePosition(delta);
+			overChar.updateHitbox();
+			
+			//Check if character is going into doorway and swap screen accordingly
+			//Doorways in the overworld
+			if(gameState == 0 && island.checkPortalHitboxes(overChar.getRectHitboxes().get(0), overChar.getRectHitboxes().get(1))){
+				//Player entered cave (send to cave)
+				if(island.getPortal() == "Cave"){
+					gameState = 1; 
+					overChar.setPosition(-0.3f,-3.5f);
+					overChar.updateHitbox();
+				}
+				//Player entered cottage (send to cottage menu)
+				else if(island.getPortal() == "Cottage"){
+					gameState = 2;
+				}
+				//Player entered castle (send to castle)
+				else if(island.getPortal() == "Castle"){
+					gameState = 3;
+					overChar.setPosition(0, -3.5f);
+					overChar.updateHitbox();
+				}
+			}
+			//Doorway in the cave (send back to overworld)
+			else if(gameState == 1 && cave.checkPortalHitboxes(overChar.getRectHitboxes().get(0), overChar.getRectHitboxes().get(1))){
+				gameState = 0;
+				overChar.setPosition(-5.3f,0.4f);
+				overChar.updateHitbox();
+			}
+			//Doorway in the castle (send back to overworld
+			else if(gameState == 3 && castle.checkPortalHitboxes(overChar.getRectHitboxes().get(0), overChar.getRectHitboxes().get(1))){
+				gameState = 0;
+				overChar.setPosition(5.3f, 2.3f);
+				overChar.updateHitbox();
+			}
+			
+			//Check if character is clipping into any boundary hitboxes and move accordingly so that they no longer collide
+			//Overworld intersection
+			if(gameState == 0){
+				do{
+					intersect = island.checkHitboxes(overChar.getRectHitboxes().get(0), overChar.getRectHitboxes().get(1));
+					if(intersect == true){
+						overChar.setPosition((float)(overChar.getPosition().x-overChar.getDeltaX()*.001), (float)(overChar.getPosition().y-overChar.getDeltaY()*.001));
+						overChar.updateHitbox();
+					}
+				}while(intersect == true);
+				
+				island.checkBiomeHitboxes(overChar.getCenter());
+				//Set biome for selecting battle background
+				battle.setBiome(island.getBiome());
+			}
+			//Cave intersection
+			else if(gameState == 1){
+				do{
+					intersect = cave.checkHitboxes(overChar.getRectHitboxes().get(0), overChar.getRectHitboxes().get(1));
+					if(intersect == true){
+						overChar.setPosition((float)(overChar.getPosition().x-overChar.getDeltaX()*.001), (float)(overChar.getPosition().y-overChar.getDeltaY()*.001));
+						overChar.updateHitbox();
+					}
+				}while(intersect == true);
+				//Set biome for selecting battle background
+				battle.setBiome("Cave");
+			}
+			//Castle intersection
+			else if(gameState == 3){
+				do{
+					intersect = castle.checkHitboxes(overChar.getRectHitboxes().get(0), overChar.getRectHitboxes().get(1));
+					if(intersect == true){
+						overChar.setPosition((float)(overChar.getPosition().x-overChar.getDeltaX()*.001), (float)(overChar.getPosition().y-overChar.getDeltaY()*.001));
+						overChar.updateHitbox();
+					}
+				}while(intersect == true);
+				//Set biome for selecting battle background
+				battle.setBiome("Castle");
+			}
 		}
-		
-		if(xSpeed != 0 || ySpeed != 0){
-			overChar.setAction(1);
-		}
-		else{
-			overChar.setAction(0);
-		}
-		
-		if(xSpeed < 0){
-			getReverse = true;
-		}
-		else if(xSpeed > 0){
-			getReverse = false;
-		}
-		
-		overChar.setDeltaX(xSpeed);
-		overChar.setDeltaY(ySpeed);
-		overChar.updatePosition(delta);
-		
 	}
 
 	@Override
@@ -164,13 +243,12 @@ public class FinalProject extends SimpleFramework {
 		//renders background, then everything else
 		if(gameState == 0){
 			island.renderBackground(g, w, h);
-			overChar.render(g, worldViewport, w, h, getReverse);
 		}
 		else if(gameState == 1){
-			cottage.renderBackground(g, w, h);
+			cave.renderBackground(g, w, h);
 		}
 		else if(gameState == 2){
-			cave.renderBackground(g, w, h);
+			cottage.renderBackground(g, w, h);
 		}
 		else if(gameState == 3){
 			castle.renderBackground(g, w, h);
@@ -179,7 +257,14 @@ public class FinalProject extends SimpleFramework {
 			battle.renderBackground(g, w, h);
 		}
 		
-		//only renders hitbox if b was pressed
+		//Renders overworld character in appropriate gameStates
+		if(gameState != 2 && gameState != 4){
+			overChar.render(g, worldViewport, w, h, getReverse);
+		}
+		
+		
+		
+		//only renders hitbox if spacebar was pressed
 		if(renderHitboxes == true){
 			
 			if(gameState == 0){
@@ -187,16 +272,12 @@ public class FinalProject extends SimpleFramework {
 				overChar.renderHitboxes(g, worldViewport);
 			}
 			else if(gameState == 1){
-				cottage.renderBackground(g, w, h);
-			}
-			else if(gameState == 2){
-				cave.renderBackground(g, w, h);
+				cave.renderHitboxes(g, worldViewport);
+				overChar.renderHitboxes(g, worldViewport);
 			}
 			else if(gameState == 3){
-				castle.renderBackground(g, w, h);
-			}
-			else if(gameState == 4){
-				battle.renderBackground(g, w, h);
+				castle.renderHitboxes(g, worldViewport);
+				overChar.renderHitboxes(g, worldViewport);
 			}
 		}
 	}

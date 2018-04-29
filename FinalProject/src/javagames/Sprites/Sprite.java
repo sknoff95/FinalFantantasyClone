@@ -204,13 +204,14 @@ public class Sprite implements Drawable{
 			Vector2f boxBotRight = rectHitboxes.get(a+1);
 			
 			if(topLeft.x > boxBotRight.x || bottomRight.x < boxTopLeft.x){
-				return false;
 			}
-			if(topLeft.y < boxBotRight.y || bottomRight.y > boxTopLeft.y){
-				return false;
+			else if(topLeft.y < boxBotRight.y || bottomRight.y > boxTopLeft.y){
+			}
+			else{
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	//Get functions that get values from vectors array list

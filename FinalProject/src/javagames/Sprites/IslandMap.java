@@ -16,6 +16,8 @@ public class IslandMap extends Sprite {
 	private BufferedImage b;
 	private ArrayList<Vector2f> rectPortalHitboxes = new ArrayList<Vector2f>();
 	private ArrayList<Vector2f> rectBiomeHitboxes = new ArrayList<Vector2f>();
+	private String portal = null;
+	private String biome = "Prairie";
 	
 	//grabs image from resources folder
 	public IslandMap(String imageName){
@@ -71,6 +73,62 @@ public class IslandMap extends Sprite {
 		this.addRectBiomeHitbox(new Vector2f(2.67f,-1.03f), new Vector2f(7.18f,-2.97f));
 		this.addRectBiomeHitbox(new Vector2f(3.62f,-2.97f), new Vector2f(7.18f,-3.75f));
 		
+	}
+	
+	public Boolean checkPortalHitboxes(Vector2f topLeft, Vector2f bottomRight){
+		
+		//Rectangular Hit Box Detection
+		for(int a = 0; a < rectPortalHitboxes.size(); a += 2){
+			Vector2f boxTopLeft = rectPortalHitboxes.get(a);
+			Vector2f boxBotRight = rectPortalHitboxes.get(a+1);
+			
+			if(topLeft.x > boxBotRight.x || bottomRight.x < boxTopLeft.x){
+			}
+			else if(topLeft.y < boxBotRight.y || bottomRight.y > boxTopLeft.y){
+			}
+			else{
+				if(a == 0){
+					portal = "Cave";
+				}
+				else if(a == 2){
+					portal = "Cottage";
+				}
+				else if(a == 4){
+					portal = "Castle";
+				}
+				return true;
+			}
+		}
+		portal = null;
+		return false;
+	}
+	
+	public Boolean checkBiomeHitboxes(Vector2f center){
+		
+		//Rectangular Hit Box Detection
+		for(int a = 0; a < rectBiomeHitboxes.size(); a += 2){
+			Vector2f boxTopLeft = rectBiomeHitboxes.get(a);
+			Vector2f boxBotRight = rectBiomeHitboxes.get(a+1);
+			
+			if(center.x > boxBotRight.x || center.x < boxTopLeft.x){
+			}
+			else if(center.y < boxBotRight.y || center.y > boxTopLeft.y){
+			}
+			else{
+				biome = "Forest";
+				return true;
+			}
+		}
+		biome = "Prairie";
+		return false;
+	}
+	
+	public String getPortal(){
+		return portal;
+	}
+	
+	public String getBiome(){
+		return biome;
 	}
 	
 	//renders the image as the screen
