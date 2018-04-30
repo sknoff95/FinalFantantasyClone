@@ -32,7 +32,7 @@ public class Goblin extends Character{
 	}*/
 	
 	@Override
-	public void act(int action, Character[] targetArr, int target)
+	public void act(int action, Character[] targetArr, int target) //public void act(int action, Character target)
 	{
 		switch(action)
 		{
