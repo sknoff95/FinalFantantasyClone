@@ -4,10 +4,25 @@ public class Boss extends Character{
 	
 	public Boss()
 	{
-		super("res/death_knight.png", 60, 26, 200, 50, "Jonathan Von Fragglerock", 30, 45, 30, 30);
+		super("src/Character/death_knight.png", 60, 26, 50, "Jonathan Von Fragglerock", 30, 30, 30);
+		setSp(45);
+		setHp(200);
+		grabFrame(62, 196);
 	}
 	
-	public void act(int action, Character[] players, int target)
+	@Override
+	public void generateAction(Character[] players)
+	{
+		if(stunned)
+			act = -1;
+		else
+			act = rand.nextInt(3) + 1;
+		
+		int target = rand.nextInt(3) + 0;
+		tgt = players[target];
+	}
+	
+	public void act(int action, Character target)
 	{
 		switch(action)
 		{
@@ -15,26 +30,26 @@ public class Boss extends Character{
 			stunned = false;
 			break;
 		case 1: 
-			this.attack(players);
-			break;
-		case 2:
-			this.groupAttack(players);
+			attack(target);
 			break;
 		case 3: 
-			this.drain(players);
+			this.drain(target);
 			break;
 		}
 	}
 	
-	private void attack(Character[] players)
+	@Override
+	public void act(Character[] players)
+	{
+		groupAttack(players);
+	}
+	
+	private void attack(Character target)
 	{
 		int dmg = rand.nextInt(50) + 35;
-		int target;
-		do{
-			target = rand.nextInt(3) + 0;
-		}while(players[target].stealth);
 		
-		players[target].damage(dmg);
+		if(!target.stealth)
+			target.damage(dmg);
 	}
 	
 	private void groupAttack(Character[] players)
@@ -48,16 +63,15 @@ public class Boss extends Character{
 		}
 	}
 	
-	private void drain(Character[] players)
+	private void drain(Character target)
 	{
 		int dmg = rand.nextInt(30) + 20;
-		int target;
-		do{
-			target = rand.nextInt(3) + 0;
-		}while(players[target].stealth);
 		
-		players[target].damage(dmg);
-		heal(dmg);
+		if(!target.stealth)
+		{
+			target.damage(dmg);
+			heal(dmg);
+		}
 	}
 
 }

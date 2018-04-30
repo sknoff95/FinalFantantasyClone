@@ -1,13 +1,11 @@
 package Character;
 
-import SimpleFramework.*;
-
 public class PlayerCharacter extends Character{
 
 	private int xp, xpmax;
 	
-	public PlayerCharacter(String fileName, int h, int w, int hp, String name, int str, int sp, int con, int intel) {
-		super(fileName, h, w, hp, 1, name, str, sp, con, intel);
+	public PlayerCharacter(String fileName, int h, int w, String name, int str, int con, int intel) {
+		super(fileName, h, w, 1, name, str, con, intel);
 		
 		xpmax = 6;
 		xp = 0;

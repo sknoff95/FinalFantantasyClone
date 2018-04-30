@@ -6,7 +6,10 @@ import SimpleFramework.Vector2f;
 public class Mage extends PlayerCharacter{
 
 	public Mage() {
-		super("res2/mage.png", 24, 16, 20, "Tim the Enchanter", 1, 15, 1, 2);
+		super("src/Character/mage.png", 24, 16, "Tim the Enchanter", 1, 1, 2);
+		setSp(15);
+		setHp(20);
+		grabFrame(6, 36);
 	}
 	
 	@Override
@@ -22,7 +25,7 @@ public class Mage extends PlayerCharacter{
 	}
 	
 	@Override
-	public void act(int action, Character[] targetArr, int target)
+	public void act(int action, Character target)
 	{
 		switch(action)
 		{
@@ -30,46 +33,46 @@ public class Mage extends PlayerCharacter{
 			stunned = false;
 			break;
 		case 1:
-			this.attack(targetArr, target);
+			attack(target);
 			break;
 		case 2:
-			this.stun(targetArr, target);
+			stun(target);
 			break;
 		case 3:
-			this.heal(targetArr, target);
+			heal(target);
 			break;
 		//Use health potion
 		case 4:
-			targetArr[target].heal(25);
+			heal(25);
 			break;
 		//Use revive scroll
 		case 5:
-			if(!targetArr[target].isAlive())
+			if(!target.isAlive())
 			{
-				targetArr[target].alive = true;
-				targetArr[target].heal(25);
+				target.alive = true;
+				target.heal(25);
 			}
 			break;
 		}
 	}
 	
-	private void stun(Character[] enemies, int target)
+	private void stun(Character target)
 	{
-		enemies[target].stunned = true;
+		target.stunned = true;
 	}
 	
-	private void attack(Character[] enemies, int target)
+	private void attack(Character target)
 	{
 		int dmg = (rand.nextInt(3) + 1) + intel;
 		
-		enemies[target].damage(dmg);
+		target.damage(dmg);
 	}
 	
-	private void heal(Character[] allies, int target)
+	private void heal(Character target)
 	{
 		int heal = (rand.nextInt(6) + 3) + intel;
 		
-		allies[target].heal(heal);
+		target.heal(heal);
 	}
 	
 	@Override

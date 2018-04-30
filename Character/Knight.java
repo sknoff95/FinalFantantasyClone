@@ -8,8 +8,10 @@ public class Knight extends PlayerCharacter{
 	private boolean defenseUp;
 	
 	public Knight() {
-		super("res2/knight.png", 31, 20, 45, "Steven the Knight", 1, 10, 2, 1);
-		//grabFrame(4, 65);
+		super("src/Character/knight.png", 21, 30, "Steven the Knight", 1, 2, 1);
+		setHp(45);
+		setSp(10);
+		grabFrame(4, 65);
 		defenseUp = false;
 	}
 
@@ -26,9 +28,8 @@ public class Knight extends PlayerCharacter{
 		return lv;		
 	}
 	
-	//Add second count for just the enemies array group attack
 	@Override
-	public void act(int action, Character[] targetArr, int target)
+	public void act(int action, Character target)
 	{
 		switch(action)
 		{
@@ -36,28 +37,30 @@ public class Knight extends PlayerCharacter{
 			stunned = false;
 			break;
 		case 1:
-			this.attack(targetArr, target);
-			break;
-		case 2:
-			this.groupAttack(targetArr);
+			attack(target);
 			break;
 		case 3:
-			this.buff();
+			buff();
 			break;
 		//Use health potion
 		case 4:
-			//Fix this in the other ones
 			heal(25);
 			break;
 		//Use revive scroll
 		case 5:
-			if(!targetArr[target].isAlive())
+			if(!target.isAlive())
 			{
-				targetArr[target].alive = true;
-				targetArr[target].heal(25);
+				target.alive = true;
+				target.heal(25);
 			}
 			break;
 		}
+	}
+	
+	@Override
+	public void act(Character[] enemies)
+	{
+		groupAttack(enemies);
 	}
 	
 	@Override
@@ -77,11 +80,11 @@ public class Knight extends PlayerCharacter{
 		return alive;
 	}
 
-	private void attack(Character[] enemies, int target)
+	private void attack(Character target)
 	{
 		int dmg = (rand.nextInt(3) + 1) + str;
 		
-		enemies[target].damage(dmg);
+		target.damage(dmg);
 	}
 	
 	private void groupAttack(Character[] enemies)
@@ -95,11 +98,6 @@ public class Knight extends PlayerCharacter{
 	private void buff()
 	{
 		defenseUp = true;
-	}
-	
-	public void deBuff()
-	{
-		defensUp = false;
 	}
 	
 	@Override

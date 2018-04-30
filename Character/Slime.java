@@ -5,13 +5,16 @@ import SimpleFramework.Vector2f;
 
 public class Slime extends Character{
 
-	public Slime(int h, int w, int hp, int lv,  int sp) {
+	public Slime(int lv) {
 		//For level, should probably input a random between characterLevel-2 and characterLevel+2 in the logic. Same goes for speed
-		super("res2/slime.png", 22, 28, hp, lv, "Slime", 1+lv, sp, 1+(2*lv), 1+lv);
+		super("src/Character/slime.png", 22, 28, lv, "Slime", 1+lv, 1+(2*lv), 1+lv);
+		setSp(rand.nextInt(25) + 15);
+		setHp((rand.nextInt(40) + 30) + con);
+		grabFrame(2, 10);
 	}
-
+	
 	@Override
-	public void act(int action, Character[] targetArr)
+	public void act(int action, Character target)
 	{
 		switch(action)
 		{
@@ -19,24 +22,22 @@ public class Slime extends Character{
 			stunned = false;
 			break;
 		case 1:
-			this.attack(targetArr);
+			this.attack(target);
 			break;
 		}
 	}
 	
-	private void attack(Character[] party)
+	private void attack(Character target)
 	{
 		int stun = rand.nextInt(10) + 1;
 		int dmg = rand.nextInt(3) + 1;
-		int target;
-		do{
-		target = rand.nextInt(3) + 0;
-		}while(party[target].stealth);
-		
-		if(stun == 1)
-			party[target].stunned = true;
-		
-		party[target].damage(dmg);
+		if(!target.stealth)
+		{
+			if(stun == 1)
+				target.stunned = true;
+			
+			target.damage(dmg);
+		}
 	}
 	
 	@Override

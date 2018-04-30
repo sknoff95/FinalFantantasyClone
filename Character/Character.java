@@ -15,31 +15,54 @@ public class Character extends Sprite{
 	protected int str, sp, con, intel;
 	protected Random rand;
 	protected BoundingObject bound;
+	protected int act;
+	protected Character tgt;
 	
-	public Character(String fileName, int h, int w, int hp, int lv, String name, int str, int sp, int con, int intel) {
+	public Character(String fileName, int h, int w, int lv, String name, int str, int con, int intel) {
 		super(fileName, h, w);
 		
-		this.hp = hpmax = hp;
+		hp = hpmax = 0;
 		this.lv = lv;
 		this.name = name;
 		alive = true;
 		stunned = false;
 		stealth = false;
 		this.str = str;
-		this.sp = sp;
+		sp = 0;
 		this.con = con;
 		this.intel = intel;
+		
+		act = -1;
+		tgt = null;
 		
 		rand = new Random();
 	}
 	
-	//This one is only used for wolf and slime
-	public void act(int action, Character[] targetArr)
+	//Everybody should use this one
+	public void act(int action, Character target)
 	{
 	}
 	
-	//This one is used for all characters and also the goblin, that's why it's in character rather than playerCharacter
-	public void act(int action, Character[] targetArr, int target)
+	//This is used for the two group attacks, this one might need to be changed
+	public void act(Character[] targetArr)
+	{
+	}
+	
+	//This is only here cause I'm pretty sure that the array is only a character array
+	public void generateAction(Character[] players)
+	{
+		if(stunned)
+			act = -1;
+		else
+			act = 1;
+		
+		int target = rand.nextInt(3) + 0;
+		
+		tgt = players[target];
+	}
+	
+	//Same as ^^
+	public void generateAction(Character[] players, Character[] enemies)
 	{
 	}
 
@@ -88,13 +111,57 @@ public class Character extends Sprite{
 	}
 	
 	public void stepUp(Matrix3x3f viewport)
-	{
-		
+	{	
 	}
 	
 	public void stepBack(Matrix3x3f viewport)
+	{	
+	}
+	
+	public void setAct(int act)
 	{
-		
+		this.act = act;
+	}
+	
+	public int getAct()
+	{
+		return act;
+	}
+	
+	public void setTgt(Character target)
+	{
+		tgt = target;
+	}
+	
+	public Character getTgt()
+	{
+		return tgt;
+	}
+	
+	public void setSp(int speed)
+	{
+		sp = speed;
+	}
+	
+	public void setHp(int health)
+	{
+		hp = hpmax = health;
+	}
+	
+	public int getHp()
+	{
+		return hp;
+	}
+	
+	public int getHpMax()
+	{
+		return hpmax;
+	}
+	
+	public void reset()
+	{
+		act = -1;
+		tgt = null;
 	}
 }
 

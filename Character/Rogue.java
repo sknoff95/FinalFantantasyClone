@@ -6,11 +6,10 @@ import SimpleFramework.*;
 public class Rogue extends PlayerCharacter{
 	
 	public Rogue(Matrix3x3f viewport) {
-		super("src/Character/rouge.png", 30, 18, 30, "Gary the Thief", 1, 35, 1, 1);
+		super("src/Character/rouge.png", 30, 18, "Gary the Thief", 1, 1, 1);
+		setSp(35);
+		setHp(30);
 		grabFrame(102, 34);
-		setAlpha(1.0f);
-		bound = new BoundingBox(new Vector2f(-0.97f, 0.30f), new Vector2f(-1.43f, 1.05f));
-		setBound(bound, viewport);
 	}
 
 	@Override
@@ -27,7 +26,7 @@ public class Rogue extends PlayerCharacter{
 	}
 	
 	@Override
-	public void act(int action, Character[] targetArr, int target)
+	public void act(int action, Character target)
 	{
 		switch(action)
 		{
@@ -35,27 +34,27 @@ public class Rogue extends PlayerCharacter{
 			stunned = false;
 			break;
 		case 1: 
-			this.attack(targetArr, target);
+			attack(target);
 			break;
 		case 2:
-			this.stealth();
+			stealth();
 			break;
 		//Use health potion
 		case 4:
-			targetArr[target].heal(25);
+			heal(25);
 			break;
 		//Use revive scroll
 		case 5:
-			if(!targetArr[target].isAlive())
+			if(!target.isAlive())
 			{
-				targetArr[target].alive = true;
-				targetArr[target].heal(25);
+				target.alive = true;
+				target.heal(25);
 			}
 			break;
 		}
 	}
 	
-	private void attack(Character[] enemies, int target)
+	private void attack(Character target)
 	{
 		int dmg = (rand.nextInt(5) + 3) + str;
 		int crit = rand.nextInt(10) + 1;
@@ -70,7 +69,7 @@ public class Rogue extends PlayerCharacter{
 			setAlpha(1.0f);
 		}
 		
-		enemies[target].damage(dmg);
+		target.damage(dmg);
 	}
 	
 	private void stealth()
