@@ -26,6 +26,7 @@ public class Knight extends PlayerCharacter{
 		return lv;		
 	}
 	
+	//Add second count for just the enemies array group attack
 	@Override
 	public void act(int action, Character[] targetArr, int target)
 	{
