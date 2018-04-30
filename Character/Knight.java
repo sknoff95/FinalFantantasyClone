@@ -8,7 +8,8 @@ public class Knight extends PlayerCharacter{
 	private boolean defenseUp;
 	
 	public Knight() {
-		super("res2/knight.png", 21, 30, 45, "Steven the Knight", 1, 10, 2, 1);
+		super("res2/knight.png", 31, 20, 45, "Steven the Knight", 1, 10, 2, 1);
+		//grabFrame(4, 65);
 		defenseUp = false;
 	}
 
