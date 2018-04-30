@@ -44,7 +44,8 @@ public class Knight extends PlayerCharacter{
 			break;
 		//Use health potion
 		case 4:
-			targetArr[target].heal(25);
+			//Fix this in the other ones
+			heal(25);
 			break;
 		//Use revive scroll
 		case 5:
@@ -92,6 +93,11 @@ public class Knight extends PlayerCharacter{
 	private void buff()
 	{
 		defenseUp = true;
+	}
+	
+	public void deBuff()
+	{
+		defensUp = false;
 	}
 	
 	@Override
