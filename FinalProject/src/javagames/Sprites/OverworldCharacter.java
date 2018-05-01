@@ -93,8 +93,8 @@ public class OverworldCharacter extends Sprite{
 	}
 	
 	public void updateHitbox(){
-		this.getRectHitboxes().set(0, new Vector2f((position.x+0.15f), (position.y-.035f)));
-		this.getRectHitboxes().set(1, new Vector2f((position.x + .45f), (position.y - .62f)));
+		this.getRectHitboxes().set(0, new Vector2f((position.x), (position.y)));
+		this.getRectHitboxes().set(1, new Vector2f((position.x + .59f), (position.y - .62f)));
 	}
 	
 	public void setCenter(Vector2f v){
@@ -112,50 +112,77 @@ public class OverworldCharacter extends Sprite{
 		Graphics2D g2d = (Graphics2D)g;
 		//idle
 		if(action == 0){
-			sub = c.getSubimage(0, 0, 45, 49);
+			sub = c.getSubimage(0, 0, 32, 32);
 		}
-		//run
+		//run down
 		else if(action == 1){
-			if(time <= .1){
-				sub = c.getSubimage(0, 150, 46, 50);
-			}
-			else if(time <= .2){
-				sub = c.getSubimage(46, 150, 46, 50);
+			if(time <= .15){
+				sub = c.getSubimage(0, 0, 32, 32);
 			}
 			else if(time <= .3){
-				sub = c.getSubimage(46*2, 150, 46, 50);
+				sub = c.getSubimage(32, 0, 32, 32);
 			}
-			else if(time <= .4){
-				sub = c.getSubimage(46*3, 150, 46, 50);
-			}
-			else if(time <= .5){
-				sub = c.getSubimage(46*4, 150, 46, 50);
+			else if(time <= .45){
+				sub = c.getSubimage(32*2, 0, 32, 32);
 			}
 			else if(time <= .6){
-				sub = c.getSubimage(46*5, 150, 46, 50);
-			}	
-			else if(time <= .7){
-				sub = c.getSubimage(46*6, 150, 46, 50);
+				sub = c.getSubimage(32*3, 0, 32, 32);
+				time -= .6;
 			}
-			else if(time <= .8){
-				sub = c.getSubimage(46*7, 150, 46, 50);
-				time -= .8;
+		}
+		//run up
+		else if(action == 2){
+			if(time <= .15){
+				sub = c.getSubimage(0, 32, 32, 32);
+			}
+			else if(time <= .3){
+				sub = c.getSubimage(32, 32, 32, 32);
+			}
+			else if(time <= .45){
+				sub = c.getSubimage(32*2, 32, 32, 32);
+			}
+			else if(time <= .6){
+				sub = c.getSubimage(32*3, 32, 32, 32);
+				time -= .6;
+			}
+		}
+		//run right
+		else if(action == 3){
+			if(time <= .15){
+				sub = c.getSubimage(0, 32*3, 32, 32);
+			}
+			else if(time <= .3){
+				sub = c.getSubimage(32, 32*3, 32, 32);
+			}
+			else if(time <= .45){
+				sub = c.getSubimage(32*2, 32*3, 32, 32);
+			}
+			else if(time <= .6){
+				sub = c.getSubimage(32*3, 32*3, 32, 32);
+				time -= .6;
+			}
+		}
+		//run left
+		else if(action == 4){
+			if(time <= .15){
+				sub = c.getSubimage(0, 32*2, 32, 32);
+			}
+			else if(time <= .3){
+				sub = c.getSubimage(32, 32*2, 32, 32);
+			}
+			else if(time <= .45){
+				sub = c.getSubimage(32*2, 32*2, 32, 32);
+			}
+			else if(time <= .6){
+				sub = c.getSubimage(32*3, 32*2, 32, 32);
+				time -= .6;
 			}
 		}
 		
+		
 		//reverses image if needed
-		//Run Right
-		if(reverse == true){
-			tempPos = view.mul(Matrix3x3f.identity().mul(position));
-			g2d.drawImage(sub, (int)tempPos.x, (int)tempPos.y, width/15, height/25, null);
-		}
-		//Run Left
-		else{
-			tempPos.x = position.x;
-			tempPos.y = position.y;
-			tempPos = view.mul(Matrix3x3f.identity().mul(tempPos));
-			g2d.drawImage(sub, (int)tempPos.x, (int)tempPos.y, width/15, height/25, null);		
-		}
+		tempPos = view.mul(Matrix3x3f.identity().mul(position));
+		g2d.drawImage(sub, (int)tempPos.x, (int)tempPos.y, width/15, height/25, null);
 		g2d.setColor(Color.CYAN);
 		//g2d.fillRect((int)(view.mul(Matrix3x3f.identity().mul(center))).x, (int)(view.mul(Matrix3x3f.identity().mul(center))).y, 1, 1);
 	}

@@ -26,18 +26,20 @@ public class FinalProject extends SimpleFramework {
 	private Cave cave = new Cave("CaveInterior.png");
 	private Castle castle = new Castle("CastleInterior.png");
 	private Battle battle = new Battle();
-	private OverworldCharacter overChar = new OverworldCharacter("OverworldCharacter.png");
+	private Inventory inventory = new Inventory();
+	private OverworldCharacter overChar = new OverworldCharacter("knight.png");
 	private boolean getReverse = false;
 	private boolean renderHitboxes = true;
 	private int gameState = 3;
 	private float xSpeed = 0;
 	private float ySpeed = 0;
-	private final int NUMBER_OF_GAMESTATES = 5;
+	private final int NUMBER_OF_GAMESTATES = 6;
 	//Gamestate 0 = overworld
 	//Gamestate 1 = cave
 	//Gamestate 2 = cottage
 	//Gamestate 3 = castle
 	//Gamestate 4 = battle
+	//Gamestate 5 = main menu
 	
 	//Sets all of the initial variables which define the canvas space
 	public FinalProject() {
@@ -86,7 +88,6 @@ public class FinalProject extends SimpleFramework {
 		if(gameState != 2 && gameState != 4){
 			xSpeed = 0;
 			ySpeed = 0;
-			overChar.addTime(delta);
 			
 			if(keyboard.keyDown(KeyEvent.VK_D)){
 				xSpeed += 2;
@@ -114,7 +115,13 @@ public class FinalProject extends SimpleFramework {
 			//Selecting an option
 			if(keyboard.keyDownOnce(KeyEvent.VK_ENTER)){
 				System.out.println(cottage.getSelectedOption());
-				if(cottage.getSelectedOption() == 4){
+				if(cottage.getSelectedOption() == 1){
+					inventory.buyPotion();
+				}
+				else if(cottage.getSelectedOption() == 2){
+					inventory.buyScroll();
+				}
+				else if(cottage.getSelectedOption() == 4){
 					gameState = 0;
 					overChar.setPosition(0, 0);
 				}
@@ -133,24 +140,30 @@ public class FinalProject extends SimpleFramework {
 		super.updateObjects(delta);
 		boolean intersect;
 		//Overworld character movement speed updates
-		if(gameState != 2 && gameState != 4){
+		if(gameState != 2 && gameState != 4 && gameState != 5){
 			if(xSpeed != 0 && ySpeed != 0){
 				xSpeed = xSpeed*0.707f;
 				ySpeed = ySpeed*0.707f;
 			}
 			
-			if(xSpeed != 0 || ySpeed != 0){
+			if(ySpeed < 0){
 				overChar.setAction(1);
+				overChar.addTime(delta);
+			}
+			else if(ySpeed > 0){
+				overChar.setAction(2);
+				overChar.addTime(delta);
+			}
+			else if(xSpeed < 0){
+				overChar.setAction(3);
+				overChar.addTime(delta);
+			}
+			else if(xSpeed > 0){
+				overChar.setAction(4);
+				overChar.addTime(delta);
 			}
 			else{
 				overChar.setAction(0);
-			}
-			
-			if(xSpeed < 0){
-				getReverse = true;
-			}
-			else if(xSpeed > 0){
-				getReverse = false;
 			}
 			
 			overChar.setDeltaX(xSpeed);
@@ -186,9 +199,15 @@ public class FinalProject extends SimpleFramework {
 			}
 			//Doorway in the castle (send back to overworld
 			else if(gameState == 3 && castle.checkPortalHitboxes(overChar.getRectHitboxes().get(0), overChar.getRectHitboxes().get(1))){
-				gameState = 0;
-				overChar.setPosition(5.3f, 2.3f);
-				overChar.updateHitbox();
+				if(castle.getBossBattle()){
+					gameState = 4;
+					overChar.setPosition(0, -1f);
+				}
+				else{
+					gameState = 0;
+					overChar.setPosition(5.3f, 2.3f);
+					overChar.updateHitbox();
+				}
 			}
 			
 			//Check if character is clipping into any boundary hitboxes and move accordingly so that they no longer collide
@@ -241,14 +260,14 @@ public class FinalProject extends SimpleFramework {
 		int h = canvas.getHeight();
 		
 		//renders background, then everything else
-		if(gameState == 0){
+		if(gameState == 0 || gameState == 5){
 			island.renderBackground(g, w, h);
 		}
 		else if(gameState == 1){
 			cave.renderBackground(g, w, h);
 		}
 		else if(gameState == 2){
-			cottage.renderBackground(g, w, h);
+			cottage.renderBackground(g, w, h, inventory.getNumPotions(), inventory.getNumScrolls(), inventory.getGold());
 		}
 		else if(gameState == 3){
 			castle.renderBackground(g, w, h);
@@ -258,10 +277,14 @@ public class FinalProject extends SimpleFramework {
 		}
 		
 		//Renders overworld character in appropriate gameStates
-		if(gameState != 2 && gameState != 4){
+		if(gameState != 2 && gameState != 4 && gameState != 5){
 			overChar.render(g, worldViewport, w, h, getReverse);
 		}
 		
+		//Renders start menu
+		if(gameState == 5){
+			
+		}
 		
 		
 		//only renders hitbox if spacebar was pressed

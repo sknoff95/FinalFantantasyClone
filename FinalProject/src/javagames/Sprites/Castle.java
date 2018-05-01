@@ -14,7 +14,9 @@ import javagames.util.Vector2f;
 
 public class Castle extends Sprite {
 	private BufferedImage b;
+	private BufferedImage deathKnight;
 	private ArrayList<Vector2f> rectPortalHitboxes = new ArrayList<Vector2f>();
+	private boolean bossBattle = false;
 	
 	//grabs image from resources folder
 	public Castle(String imageName){
@@ -24,8 +26,18 @@ public class Castle extends Sprite {
 			e.printStackTrace();
 		}
 		
+		try {
+			this.deathKnight = ImageIO.read(new File(System.getProperty("user.dir") + "/src/resources/death_knight.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		deathKnight = deathKnight.getSubimage(48, 128, 48, 64);
+		
 		//Exit Hitbox
 		this.addRectPortalHitbox(new Vector2f(-1.52f, -4.5f), new Vector2f(1.985f, -5f));
+		//Boss Battle Start Hitbox
+		this.addRectPortalHitbox(new Vector2f(-0.35f, 1.47f), new Vector2f(0.84f, 0.0f));
 		
 		//Boundary Hitboxes
 		//Left
@@ -54,15 +66,26 @@ public class Castle extends Sprite {
 			else if(topLeft.y < boxBotRight.y || bottomRight.y > boxTopLeft.y){
 			}
 			else{
+				if(a == 2){
+					bossBattle = true;
+				}
+				else{
+					bossBattle = false;
+				}
 				return true;
 			}
 		}
 		return false;
 	}
 	
+	public boolean getBossBattle(){
+		return bossBattle;
+	}
+	
 	//renders the image as the screen
 	public void renderBackground(Graphics g, int w, int h){
 		g.drawImage(b, 0, 0, w, h, null);
+		g.drawImage(deathKnight, (int)(w/2.15), h/3, w/10, h/6, null);
 	}
 	
 	//hitbox rendering

@@ -31,11 +31,11 @@ private int selectedOption = 1;
 	}
 	
 	//renders the image as the screen
-	public void renderBackground(Graphics g, int w, int h){
+	public void renderBackground(Graphics g, int w, int h, int potions, int scrolls, int gold){
 		g.setColor(Color.WHITE);
 		g.drawImage(b, 0, 0, w, h, null);
 		//Draw the menu background
-		g.fillRect((w/10), (h/8), (w/5), (h/5));
+		g.fillRect((w/10), (h/8), (w/5), (h/2));
 		//Select highlight behind text
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect((w/10), (h/7)+(selectedOption*25)-10, (w/5), 14);
@@ -46,6 +46,11 @@ private int selectedOption = 1;
 		g.drawString("Buy Revive Scroll x 1000 G", (w/10), (h/7)+50);
 		g.drawString("Rest in cottage", (w/10), (h/7)+75);
 		g.drawString("Leave cottage", (w/10), (h/7)+100);
+		g.drawString("Inventory: ", (w/10), (h/7)+150);
+		g.drawString("Health Potions: " + potions, (w/10), (h/7)+175);
+		g.drawString("Revive Scrolls: " + scrolls, (w/10), (h/7)+200);
+		g.drawString("Gold: " + gold, (w/10), (h/7)+225);
+		
 	}
 	
 	public void incrementSelectedOption(){
