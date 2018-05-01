@@ -1,3 +1,3 @@
-Battle.Java has the main method. This pretty much exclusively will just place characters and enemies on the screen (represented as VectorObject boxes). If you go into BattleScreen.Java you can change the length of the "characters" and "enemies" arrays to see the scalability (limited only by the size of the sprites themselves). At their current size, they overlap whenever there are more than 8 objects on one side.
+The battle in all it's unanimated glory, still lacking health indicators (Because of the issue of getting pixel values, I'm gonna just make another menu at the top that just displays the names with "HP/maxHP" next to it. 
 
-You'll need to have the whole javagames.util package from the book to run this.
+This requires the character package, the sound engine package, the boundingBox package, and javagames.util.
