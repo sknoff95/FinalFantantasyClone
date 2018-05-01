@@ -24,10 +24,11 @@ public class SoundEngine {
 	private byte[] fireballBytes;
 	private byte[] goblinBytes;
 	private byte[] healBytes;
-	private byte[] lightningBytes;
+	private byte[] reviveBytes;
 	private byte[] slimeBytes;
 	private byte[] wolfBytes;
 	private byte[] coinBytes;
+	private byte[] defensiveBytes;
 	private String loaded;
 
 	public void initialize() {
@@ -44,7 +45,7 @@ public class SoundEngine {
 		in = ResourceLoader.load(SoundPlayerExample.class, "./resources/heal.wav", "asdf");
 		healBytes = readBytes(in);
 		in = ResourceLoader.load(SoundPlayerExample.class, "./resources/lightning.wav", "asdf");
-		lightningBytes = readBytes(in);
+		reviveBytes = readBytes(in);
 		in = ResourceLoader.load(SoundPlayerExample.class, "./resources/slime.wav", "asdf");
 		slimeBytes = readBytes(in);
 		in = ResourceLoader.load(SoundPlayerExample.class, "./resources/tankswing.wav", "asdf");
@@ -56,6 +57,8 @@ public class SoundEngine {
 		wolfBytes = readBytes(in);
 		in = ResourceLoader.load(SoundPlayerExample.class, "./resources/coin.wav", "asdf");
 		coinBytes = readBytes(in);
+		in = ResourceLoader.load(SoundPlayerExample.class, "./resources/warcry.wav", "asdf");
+		defensiveBytes = readBytes(in);
 		loaded = "loaded";
 	}
 
@@ -154,7 +157,7 @@ public class SoundEngine {
 			loadWaveFile(healBytes);
 		}
 		if (clip == 9) {
-			loadWaveFile(lightningBytes);
+			loadWaveFile(reviveBytes);
 		}
 		if (clip == 10) {
 			loadWaveFile(slimeBytes);
@@ -164,6 +167,9 @@ public class SoundEngine {
 		}
 		if (clip == 12) {
 			loadWaveFile(coinBytes);
+		}
+		if (clip == 13) {
+		    loadWaveFile(defensiveBytes);
 		}
 	}
 
