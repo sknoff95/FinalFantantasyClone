@@ -10,6 +10,7 @@ public class Rogue extends PlayerCharacter{
 		setHp(30);
 		grabFrame(6, 36);
 		isMob = false;
+		setAlpha(1.0f);
 	}
 
 	@Override
@@ -28,13 +29,16 @@ public class Rogue extends PlayerCharacter{
 	@Override
 	public void act(int action, Character target)
 	{
-		if (stunned){
+		if (stunned || !isAlive()){
 			action = -1;
 		}
 		switch(action)
 		{
 		case -1:
-			System.out.println("Rogue Stunned");
+			if(!isAlive())
+				System.out.println("Rogue dead");
+			else
+				System.out.println("Rogue Stunned");
 			stunned = false;
 			break;
 		case 1: 
@@ -64,12 +68,14 @@ public class Rogue extends PlayerCharacter{
 		int crit = rand.nextInt(10) + 1;
 		
 		if(crit < 3)
+		{
 			System.out.println("Rogue Crit");
-			dmg += (dmg*.2);
+			dmg += (dmg*.5);
+		}
 		
 		if(stealth)
 		{
-			dmg += 3;
+			dmg += (2+lv);
 			stealth = false;
 			setAlpha(1.0f);
 		}

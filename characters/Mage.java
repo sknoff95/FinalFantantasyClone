@@ -10,6 +10,7 @@ public class Mage extends PlayerCharacter{
 		setHp(20);
 		grabFrame(6, 36);
 		isMob = false;
+		setAlpha(1.0f);
 	}
 	
 	@Override
@@ -28,13 +29,16 @@ public class Mage extends PlayerCharacter{
 	public void act(int action, Character target)
 	{
 		System.out.println("Mage Alive: " + isAlive());
-		if (stunned){
+		if (stunned || !isAlive()){
 			action = -1;
 		}
 		switch(action)
 		{
 		case -1:
-			System.out.println("Mage Stunned");
+			if(!isAlive())
+				System.out.println("Mage dead");
+			else
+				System.out.println("Mage Stunned");
 			stunned = false;
 			break;
 		case 1:
@@ -44,7 +48,10 @@ public class Mage extends PlayerCharacter{
 			stun(target);
 			break;
 		case 3:
-			heal(target);
+			if(target.isAlive())
+				heal(target);
+			else
+				System.out.println("Target dead");
 			break;
 		//Use health potion
 		case 4:

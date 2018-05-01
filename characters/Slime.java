@@ -10,18 +10,22 @@ public class Slime extends Character{
 		setSp(rand.nextInt(25) + 15);
 		setHp((rand.nextInt(40) + 30) + con);
 		grabFrame(2, 10);
+		setAlpha(1.0f);
 	}
 	
 	@Override
 	public void act(int action, Character target)
 	{
-		if (stunned){
+		if (stunned || !isAlive()){
 			action = -1;
 		}
 		switch(action)
 		{
 		case -1:
-			System.out.println("Slime Stunned");
+			if(!isAlive())
+				System.out.println("Slime dead");
+			else
+				System.out.println("Slime Stunned");
 			stunned = false;
 			break;
 		case 1:

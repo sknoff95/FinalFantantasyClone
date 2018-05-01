@@ -10,18 +10,24 @@ public class Goblin extends Character{
 		setSp(rand.nextInt(40) + 20);
 		setHp((rand.nextInt(20) + 10) + con);
 		grabFrame(4, 96);
+		setAlpha(1.0f);
 	}
 	
 	@Override
 	public void generateAction(Character[] enemies, Character[] players)
 	{
+		int target;
 		act = 1;
-		int target = rand.nextInt(3) + 0;
+		
+		do{
+		target = rand.nextInt(3) + 0;
+		}while(!target.isAlive());
+		
 		tgt = players[target];
 		
 		for(int i = 0; i < enemies.length; i++)
 		{
-			if(enemies[i].getHp() < enemies[i].getHpMax() / 4 && enemies[i].getHp() > 0)
+			if(enemies[i].getHp() < enemies[i].getHpMax() / 3 && enemies[i].getHp() > 0)
 			{
 				act = 2;
 				tgt = enemies[i];
@@ -33,20 +39,26 @@ public class Goblin extends Character{
 	@Override
 	public void act(int action, Character target)
 	{
-		if (stunned){
+		if (stunned || !isAlive()){
 			action = -1;
 		}
 		switch(action)
 		{
 		case -1:
-			System.out.println("Goblin Stunned");
+			if(!isAlive())
+				System.out.println("Goblin dead");
+			else
+				System.out.println("Goblin Stunned");
 			stunned = false;
 			break;
 		case 1:
 			this.attack(target);
 			break;
 		case 2:
-			this.heal(target);
+			if(target.isAlive())
+				this.heal(target);
+			else
+				System.out.println("Target dead");
 			break;
 		}
 	}

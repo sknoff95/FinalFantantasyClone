@@ -58,8 +58,7 @@ public class Character extends Sprite{
 		int target;
 		do{
 		target = rand.nextInt(3) + 0;
-		}
-		while (!players[target].isAlive());
+		}while(!players[target].isAlive());
 		tgt = players[target];
 	}
 	

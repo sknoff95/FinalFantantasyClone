@@ -13,6 +13,7 @@ public class Knight extends PlayerCharacter{
 		grabFrame(4, 65);
 		defenseUp = false;
 		isMob = false;
+		setAlpha(1.0f);
 	}
 
 	@Override
@@ -31,13 +32,16 @@ public class Knight extends PlayerCharacter{
 	@Override
 	public void act(int action, Character target)
 	{
-		if (stunned){
+		if (stunned || !isAlive()){
 			action = -1;
 		}
 		switch(action)
 		{
 		case -1:
-			System.out.println("Knight Stunned");
+			if(!isAlive())
+				System.out.println("Knight dead");
+			else
+				System.out.println("Knight Stunned");
 			stunned = false;
 			break;
 		case 1:

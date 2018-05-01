@@ -10,18 +10,22 @@ public class Wolf extends Character{
 		setSp(rand.nextInt(50) + 30);
 		setHp((rand.nextInt(30) + 15) + con);
 		grabFrame(64, 0);
+		setAlhpa(1.0f);
 	}
 	
 	@Override
 	public void act(int action, Character target)
 	{
-		if (stunned){
+		if (stunned || !isAlive()){
 			action = -1;
 		}
 		switch(action)
 		{
 		case -1:
-			System.out.println("Wolf Stunned");
+			if(!isAlive())
+				System.out.println("Wolf dead");
+			else
+				System.out.println("Wolf Stunned");
 			stunned = false;
 			break;
 		case 1:

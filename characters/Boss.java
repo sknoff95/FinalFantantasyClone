@@ -8,24 +8,37 @@ public class Boss extends Character{
 		setSp(45);
 		setHp(200);
 		grabFrame(62, 196);
+		setAlhpa(1.0f);
 	}
 	
 	@Override
 	public void generateAction(Character[] players)
 	{
+		int target;
 		if(stunned)
-			act = -1;
+		{
+			//50% chance to avoid being stunned
+			int skipStun = rand.nextInt(10) + 1;
+			if(skipStun < 6)
+				act = -1;
+		}
 		else
 			act = rand.nextInt(3) + 1;
 		
-		int target = rand.nextInt(3) + 0;
+		do{
+		target = rand.nextInt(3) + 0;
+		}while(!players[target].isAlive())
+			
 		tgt = players[target];
 	}
 	
 	public void act(int action, Character target)
 	{
 		if (stunned){
-			action = 1;
+			//Same as about, chance to avoid stun
+			int skipStun = rand.nextInt(10) + 1;
+			if(skipStun < 6)
+				action = -1;
 		}
 		switch(action)
 		{
