@@ -18,6 +18,8 @@ Cypher for LoadClip
 6 = Fireball Sound
 7 = Goblin Sound
 8 = Heal Sound
-9 = Lightning Sound
-10 = SLine Sound
+9 = Revive Sound
+10 = Slime Sound
 11 = Wolf Sound
+12 = Coin Sound
+13 = Bulwark Sound
